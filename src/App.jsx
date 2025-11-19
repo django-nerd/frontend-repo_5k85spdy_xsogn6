@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import HeaderSummary from './components/HeaderSummary'
 import EntryForm from './components/EntryForm'
 import EntriesList from './components/EntriesList'
+import WaterBackdrop from './components/WaterBackdrop'
 
 function App() {
   const today = new Date().toISOString().slice(0, 10)
@@ -54,22 +55,34 @@ function App() {
   const entries = summary?.entries || []
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-4">
-      <div className="max-w-3xl mx-auto space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Swim Pools Tracker</h1>
-          <p className="text-blue-200/80 mt-2">Log how many pools you swam each day and see totals for any date range.</p>
-        </div>
-
-        <HeaderSummary total={total} fromDate={fromDate} toDate={toDate} onChangeRange={onChangeRange} />
-        <EntryForm defaultDate={today} onAdd={addEntry} />
-
-        <div className="bg-slate-800/60 border border-blue-500/20 rounded-2xl p-6 md:p-8 text-white shadow-xl">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Entries</h2>
-            {loading && <span className="text-sm text-blue-300/70">Loading...</span>}
+    <div className="relative min-h-screen text-cyan-50">
+      <WaterBackdrop />
+      <div className="relative py-12 px-4">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <div className="text-center">
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-cyan-300 via-sky-300 to-teal-300 bg-clip-text text-transparent">
+              Swim Flow
+            </h1>
+            <p className="text-cyan-100/80 mt-2">Log your swims and watch your momentum build.</p>
           </div>
-          <EntriesList entries={entries} />
+
+          <HeaderSummary total={total} fromDate={fromDate} toDate={toDate} onChangeRange={onChangeRange} />
+          <EntryForm defaultDate={today} onAdd={addEntry} />
+
+          <div className="relative rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-cyan-400/10 to-sky-500/10" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">Entries</h2>
+                {loading && <span className="text-sm text-cyan-100/80">Loading...</span>}
+              </div>
+              <EntriesList entries={entries} />
+            </div>
+          </div>
+
+          <footer className="pt-2 text-center text-cyan-100/60 text-sm">
+            Keep moving. Hydrate. Breathe deep.
+          </footer>
         </div>
       </div>
     </div>
